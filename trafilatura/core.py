@@ -115,6 +115,22 @@ def handle_quotes(element, dedupbool, config):
     return None
 
 
+def handle_pre(element, dedupbool, config):
+    '''Process pre elements'''
+    processed_element = etree.Element(element.tag)
+    for child in element.iter():
+        processed_child = process_node(child, dedupbool, config, False)
+        if processed_child is not None:
+            newsub = etree.SubElement(processed_element, child.tag)
+            newsub.text, newsub.tail = processed_child.text, processed_child.tail
+        child.tag = 'done'
+    if len(processed_element) > 0:
+        # avoid double/nested tags
+        etree.strip_tags(processed_element, 'pre')
+        return processed_element
+    return None
+
+
 def handle_other_elements(element, potential_tags, dedupbool, config):
     '''Handle diverse or unknown elements in the scope of relevant tags'''
     # delete unwanted
@@ -304,6 +320,8 @@ def handle_textelem(element, potential_tags, dedupbool, config):
         new_element = handle_table(element, dedupbool, config)
     elif element.tag == 'graphic' and 'graphic' in potential_tags:
         new_element = handle_image(element)
+    elif element.tag == 'pre' and 'pre' in potential_tags:
+        new_element = handle_pre(element, dedupbool, config)
     else:
         # other elements (div, ??, ??)
         new_element = handle_other_elements(element, potential_tags, dedupbool, config)

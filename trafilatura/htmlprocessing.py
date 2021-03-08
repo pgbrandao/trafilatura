@@ -195,8 +195,8 @@ def convert_tags(tree, include_formatting=False, include_tables=False, include_i
     for elem in tree.iter('br', 'hr'):
         elem.tag = 'lb'
     # wbr
-    # blockquote, pre, q → quote
-    for elem in tree.iter('blockquote', 'pre', 'q'):
+    # blockquote, q → quote
+    for elem in tree.iter('blockquote', 'q'):
         elem.tag = 'quote'
     # include_formatting
     if include_formatting is False:
@@ -265,14 +265,15 @@ def handle_textnode(element, comments_fix=True, deduplicate=True, config=DEFAULT
     return element
 
 
-def process_node(element, deduplicate=True, config=DEFAULT_CONFIG):
+def process_node(element, deduplicate=True, config=DEFAULT_CONFIG, trim_element=True):
     '''Convert, format, and probe potential text elements (light format)'''
     if element.tag == 'done':
         return None
     if len(element) == 0 and not element.text and not element.tail:
         return None
     # trim
-    element.text, element.tail = trim(element.text), trim(element.tail)
+    if trim_element:
+        element.text, element.tail = trim(element.text), trim(element.tail)
     # adapt content string
     if element.tag != 'lb' and not element.text and element.tail:
         element.text = element.tail

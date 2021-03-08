@@ -23,13 +23,13 @@ LOGGER = logging.getLogger(__name__)
 # validation
 TEI_SCHEMA = str(Path(__file__).parent / 'data/tei-schema.pickle')
 TEI_VALID_TAGS = {'body', 'cell', 'code', 'del', 'div', 'fw', 'graphic', 'head', 'hi', \
-                  'item', 'lb', 'list', 'p', 'quote', 'ref', 'row', 'table'}
+                  'item', 'lb', 'list', 'p', 'pre', 'quote', 'ref', 'row', 'table'}
 TEI_VALID_ATTRS = {'rend', 'rendition', 'role', 'target', 'type'}
 TEI_RELAXNG = None # to be downloaded later if necessary
 
 CONTROL_PARSER = etree.XMLParser(remove_blank_text=True)
 
-TEXTELEMS = {'code', 'fw', 'head', 'lb', 'list', 'p', 'quote', 'row', 'table'}
+TEXTELEMS = {'code', 'fw', 'head', 'lb', 'list', 'p', 'pre', 'quote', 'row', 'table'}
 
 
 def build_json_output(docmeta):
@@ -72,9 +72,9 @@ def build_xml_output(docmeta):
 
 def control_xml_output(output_tree, output_format, tei_validation, docmeta):
     '''Make sure the XML output is conform and valid if required'''
-    control_string = sanitize(etree.tostring(output_tree, encoding='unicode'))
+    ### control_string = sanitize(etree.tostring(output_tree, encoding='unicode'))
     # necessary for cleaning
-    output_tree = etree.fromstring(control_string, CONTROL_PARSER)
+    ### output_tree = etree.fromstring(control_string, CONTROL_PARSER)
     # validate
     if output_format == 'xmltei' and tei_validation is True:
         result = validate_tei(output_tree)
