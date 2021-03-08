@@ -202,12 +202,6 @@ def handle_paragraphs(element, potential_tags, dedupbool, config):
             if text_chars_test(processed_child.text) is False:
                 processed_child.text = ''
             # if there are already children
-            if len(processed_element) > 0:
-                if text_chars_test(processed_child.tail) is True:
-                    newsub.tail = processed_child.text + processed_child.tail
-                else:
-                    newsub.tail = processed_child.text
-            else:
                 newsub.text, newsub.tail = processed_child.text, processed_child.tail
             processed_element.append(newsub)
             child.tag = 'done'

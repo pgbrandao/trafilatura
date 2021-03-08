@@ -317,7 +317,7 @@ def trim(string):
     '''Remove unnecessary spaces within a text string'''
     try:
         # remove newlines that are not related to punctuation or markup + proper trimming
-        return SPACE_TRIMMING.sub(r' ', NO_TAG_SPACE.sub(r' ', string)).strip(' \t\n\r\v')
+        return string
     except TypeError:
         return None
 
