@@ -208,7 +208,7 @@ def handle_paragraphs(element, potential_tags, dedupbool, config):
                      newsub.tail = processed_child.text + processed_child.tail
                  else:
                      newsub.tail = processed_child.text
-             else:
+            else:
                 newsub.text, newsub.tail = processed_child.text, processed_child.tail
             processed_element.append(newsub)
             child.tag = 'done'
