@@ -119,10 +119,8 @@ def handle_pre(element, dedupbool, config):
     '''Process pre elements'''
     processed_element = etree.Element(element.tag)
     for child in element.iter():
-        processed_child = process_node(child, dedupbool, config, False)
-        if processed_child is not None:
             newsub = etree.SubElement(processed_element, child.tag)
-            newsub.text, newsub.tail = processed_child.text, processed_child.tail
+        newsub.text, newsub.tail = child.text, child.tail
         child.tag = 'done'
     if len(processed_element) > 0:
         # avoid double/nested tags
