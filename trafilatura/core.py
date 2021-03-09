@@ -119,7 +119,7 @@ def handle_pre(element, dedupbool, config):
     '''Process pre elements'''
     processed_element = etree.Element(element.tag)
     for child in element.iter():
-            newsub = etree.SubElement(processed_element, child.tag)
+        newsub = etree.SubElement(processed_element, child.tag)
         newsub.text, newsub.tail = child.text, child.tail
         child.tag = 'done'
     if len(processed_element) > 0:
