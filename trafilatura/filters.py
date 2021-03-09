@@ -99,11 +99,11 @@ def textfilter(element):
         testtext = element.text
     if text_chars_test(testtext) is False:
         return True
-    for line in testtext.splitlines():
-        #if len(line) <= 5:
-        #    continue
-        if RE_FILTER.match(line):
-            return True
+    # for line in testtext.splitlines():
+    #     #if len(line) <= 5:
+    #     #    continue
+    #     if RE_FILTER.match(line):
+    #         return True
     return False
 
 
